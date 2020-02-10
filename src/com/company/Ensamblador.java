@@ -1,20 +1,29 @@
 package com.company;
 
-public class Ensamblador implements Runnable  {
-    private Fabrica fam;
-    private String Nom;
-
-    public Ensamblador(Fabrica f, String Nom) {
-        fam = f;
-        this.Nom = Nom;
+public class Ensamblador extends Thread {
+    Cistell cistellA, cistellB;
+    public Ensamblador(Cistell cistellA, Cistell cistellB, String name) {
+        super(name);
+        this.cistellA = cistellA;
+        this.cistellB = cistellB;
     }
 
     @Override
     public void run() {
-        if ((fam.getManigues() < 1) & fam.getCossos()< 1) {
-            fam.agafaManigues(1);
-            fam.agafaCossos(1);
-            System.out.println("Sóc el cosidor " + Nom + " he agafat 1 maniga i 1 cos\n");
+        for (;;) {
+            //agafar 2 màniques dels cistell A
+            cistellA.treure(2);
+            //agafar cos del cistell B
+            cistellB.treure(1);
+
+            //Encadellar
+            try {
+                Thread.sleep((long) Math.random() * 1500 + 500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("He encadellat un jersey");
+
         }
     }
 }

@@ -1,27 +1,27 @@
 package com.company;
 
-public class Cosidor implements Runnable {
-    private String Nom;
-    private Fabrica fa;
-
-    public Cosidor(Fabrica f, String nom) {
-        fa=f;
-        Nom = nom;
+public class Cosidor extends Thread {
+    Cistell cistell;
+    public Cosidor(Cistell cistell, String name) {
+        super(name);
+        this.cistell = cistell;
     }
-
-    public Cosidor() {
-        super();
-    }
-
-    public Cosidor(String nom) {
-        super();
-        Nom = nom;
-    }
-
 
     @Override
     public void run() {
-        fa.OmplePotManigues(1);
-        System.out.println("Sóc " + Nom + " manigues que afegeixo = " + fa.getManigues());
+        for(;;) {
+            //cosir un temps
+            try {
+                Thread.sleep((long) Math.random() * 1000 + 500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            //posar peça al cistell una màniga cosida
+            int c = cistell.posar(1);
+            System.out.println(getName() + " he afegit una peça. Total = " + c);
+
+        }
+
     }
 }
